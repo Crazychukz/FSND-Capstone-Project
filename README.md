@@ -35,7 +35,7 @@ This will install all of the required packages we selected within the `requireme
 
 #  :file_folder:
 ## Database Setup
-With Postgres running, restore a database using the capstone.psql file provided. From the backend folder in terminal run:
+With Postgres running, restore a database using the `capstone.psql` file provided. From the backend folder in terminal run:
 ```bash
 psql capstone < capstone.psql
 ```
@@ -57,8 +57,8 @@ Setting the `FLASK_ENV` variable to `development` will detect file changes and r
 Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` directory and the `__init__.py` file to find the application. 
 
 - - - -
-
-## RBAC controls  :unlock:
+## :unlock:
+## RBAC controls  
 
 
 
