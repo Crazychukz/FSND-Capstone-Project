@@ -58,6 +58,46 @@ def create_app(test_config=None):
                 "movie": [movie.long()]
             }), 200
 
+    @app.route('/movies/<int:movie_id>', methods=['DELETE'])
+    # @requires_auth('delete:drinks')
+    def delete_movie(movie_id):
+        movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+        if not movie:
+            abort(404)
+        try:
+            movie.delete()
+        except:
+            abort(400)
+
+        return jsonify(
+            {"success": True,
+             "delete": movie_id}), 200
+
+    @app.route('/movies/<int:movie_id>', methods=['PATCH'])
+    # @requires_auth('patch:drinks')
+    def update_movie(movie_id):
+        form_data = request.get_json()
+        movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+
+        if not movie:
+            abort(404)
+
+        try:
+            title = form_data.get('title')
+            release_date = form_data.get('release_date')
+            if title:
+                movie.title = title
+            if release_date:
+                movie.release_date = release_date
+            movie.update()
+        except:
+            abort(400)
+
+        return jsonify(
+            {"success": True,
+             "movie": [movie.long()]
+             }), 200
+
     @app.route('/actors', methods=['GET'])
     # @requires_auth('get:drinks-detail')
     def actors():
@@ -88,6 +128,49 @@ def create_app(test_config=None):
                 "success": True,
                 "actors": [actor.long()]
             }), 200
+
+    @app.route('/actors/<int:actor_id>', methods=['DELETE'])
+    # @requires_auth('delete:drinks')
+    def delete_actor(actor_id):
+        actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+        if not actor:
+            abort(404)
+        try:
+            actor.delete()
+        except:
+            abort(400)
+
+        return jsonify(
+            {"success": True,
+             "delete": actor_id}), 200
+
+    @app.route('/actors/<int:actor_id>', methods=['PATCH'])
+    # @requires_auth('patch:drinks')
+    def update_actor(actor_id):
+        form_data = request.get_json()
+        actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+
+        if not actor:
+            abort(404)
+
+        try:
+            name = form_data.get('name')
+            age = form_data.get('age')
+            gender = form_data.get('gender')
+            if name:
+                actor.name = name
+            if age:
+                actor.age = age
+            if gender:
+                actor.gender = gender
+            actor.update()
+        except:
+            abort(400)
+
+        return jsonify(
+            {"success": True,
+             "actor": [actor.long()]
+             }), 200
 
     @app.route('/casts/<int:movie_id>', methods=['POST'])
     # @requires_auth('delete:drinks')
