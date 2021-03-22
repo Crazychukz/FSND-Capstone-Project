@@ -60,6 +60,14 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 ## :unlock:
 ## RBAC controls  
 
+Roles and permission tables are configured in Auth0. 
+The JWT includes the RBAC permission claims.
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  |  \| 
+
 
 
 ## :link:
