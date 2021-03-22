@@ -76,9 +76,9 @@ Errors are returned as a JSON object in the format below:
 }
 ```
 
-#### Movies Endpoints
+### Movies Endpoints
 
-##### GET /movies
+### GET /movies
 
 * Returns list of added movies 
 
@@ -150,7 +150,7 @@ Errors are returned as a JSON object in the format below:
 }
 
 ```
-##### DELETE /movies/{movie_id}
+### DELETE /movies/{movie_id}
 
 * If `movie_id` exists, it deletes the given record from the database
 
@@ -163,7 +163,7 @@ Errors are returned as a JSON object in the format below:
 }
 ```    
 
-##### POST /movies
+### POST /movies
 
 * Adds a new `movie` object to the database
 
@@ -192,188 +192,42 @@ Errors are returned as a JSON object in the format below:
 }
 ```    
 
-##### GET /actors
+### Actors Endpoints
 
-* Returns available `categories`
+### GET /actors
 
-* Request Arguments: None   
-
-* Sample Response: 
-
-```json
-{
-  "categories": [
-    {
-      "id": 1, 
-      "type": "Science"
-    }, 
-    {
-      "id": 2, 
-      "type": "Art"
-    }, 
-    {
-      "id": 3, 
-      "type": "Geography"
-    }, 
-    {
-      "id": 4, 
-      "type": "History"
-    }, 
-    {
-      "id": 5, 
-      "type": "Entertainment"
-    }, 
-    {
-      "id": 6, 
-      "type": "Sports"
-    }, 
-    {
-      "id": 7, 
-      "type": "Technology"
-    }
-  ], 
-  "successful": true, 
-  "total_categories": 7
-}
-
-```
-
-##### GET /categories/{category_id}/questions
-
-* Returns all questions with given `category_id`
+* Returns available `actors`
 
 * Request Arguments: None   
 
 * Sample Response: 
 
 ```json
+
 {
-  "categories": [
-    {
-      "id": 1, 
-      "type": "Science"
-    }, 
-    {
-      "id": 2, 
-      "type": "Art"
-    }, 
-    {
-      "id": 3, 
-      "type": "Geography"
-    }, 
-    {
-      "id": 4, 
-      "type": "History"
-    }, 
-    {
-      "id": 5, 
-      "type": "Entertainment"
-    }, 
-    {
-      "id": 6, 
-      "type": "Sports"
-    }, 
-    {
-      "id": 7, 
-      "type": "Technology"
-    }
-  ], 
-  "current_category": 1, 
-  "questions": [
-    {
-      "answer": "The Liver", 
-      "category": 1, 
-      "difficulty": 4, 
-      "id": 20, 
-      "question": "What is the heaviest organ in the human body?"
-    }, 
-    {
-      "answer": "Alexander Fleming", 
-      "category": 1, 
-      "difficulty": 3, 
-      "id": 21, 
-      "question": "Who discovered penicillin?"
-    }, 
-    {
-      "answer": "Blood", 
-      "category": 1, 
-      "difficulty": 4, 
-      "id": 22, 
-      "question": "Hematology is a branch of medicine involving the study of what?"
-    }, 
-    {
-      "answer": "60", 
-      "category": 1, 
-      "difficulty": 4, 
-      "id": 26, 
-      "question": "How fast can a Tesla Model S go in 1.99sec"
-    }, 
-    {
-      "answer": "60", 
-      "category": 1, 
-      "difficulty": 4, 
-      "id": 27, 
-      "question": "How fast can a Tesla Model S go in 1.99sec"
-    }, 
-    {
-      "answer": "60", 
-      "category": 1, 
-      "difficulty": 4, 
-      "id": 28, 
-      "question": "How fast can a Tesla Model S go in 1.99sec"
-    }, 
-    {
-      "answer": "60", 
-      "category": 1, 
-      "difficulty": 4, 
-      "id": 29, 
-      "question": "How fast can a Tesla Model S go in 1.99sec"
-    }, 
-    {
-      "answer": "60", 
-      "category": 1, 
-      "difficulty": 4, 
-      "id": 30, 
-      "question": "How fast can a Tesla Model S go in 1.99sec"
-    }
-  ], 
-  "successful": true, 
-  "total_questions": 8
+    "actors": [
+        {
+            "id": 1,
+            "name": "Thomas Cruise"
+        }
+    ],
+    "success": true,
+    "total": 1
 }
 
 ```
 
+### POST /actors
 
-
-##### POST /players
-
-* Creates new player
+* Creates new `actor` record in the database
 
 * Request Arguments: 
 
 ```json
 {
-"username": "crazychukz",
-"total_score": 0
-}
-```   
-
-* Sample Response: 
-
-```json
-{"success": true}
-```   
-
-##### GET /players
-
-* Returns all players, ordered by player's score
-
-* Request Arguments: 
-
-```json
-{
-"username": "crazychukz",
-"total_score": 0
+    "name": "Thomas Cruise",
+    "gender": "Male",
+    "age": "45"
 }
 ```   
 
@@ -381,40 +235,31 @@ Errors are returned as a JSON object in the format below:
 
 ```json
 {
-  "players": [
-    {
-      "id": 2, 
-      "total_score": 4, 
-      "username": "isioma"
-    }, 
-    {
-      "id": 1, 
-      "total_score": 3, 
-      "username": "crazychukz"
-    }, 
-    {
-      "id": 3, 
-      "total_score": 2, 
-      "username": "admin"
-    }
-  ], 
-  "successful": true, 
-  "total_players": 3
+    "actor": [
+        {
+            "age": 45,
+            "gender": "Male",
+            "id": 2,
+            "name": "Thomas Cruise"
+        }
+    ],
+    "success": true
 }
+```   
 
-``` 
+
 
 ## Testing
-To run the tests, run
+
+To run the tests
 ```
-dropdb trivia_test
-createdb trivia_test
-psql trivia_test < trivia.psql
-python test_flaskr.py
+    dropdb capstone_test
+    createdb capstone_test
+    psql capstone_test < trivia.psql
+    python test_app.py
 ```
 
 
 ## Appreciation
 
-* Udacity Instructor
-* Katherine Kato - https://codepen.io/kathykato for the free 3D button
+* Udacity Instructors

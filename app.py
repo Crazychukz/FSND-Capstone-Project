@@ -127,7 +127,7 @@ def create_app(test_config=None):
         else:
             return jsonify({
                 "success": True,
-                "actors": [actor.long()]
+                "actor": [actor.long()]
             }), 200
 
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
