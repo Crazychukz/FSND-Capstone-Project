@@ -59,12 +59,13 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 
 
 
-###Getting Started
+### Getting Started
+
 - Base URL: This app is yet to be hosted, hence using the `localhost` of the development machine on `port 500` 
 `http://127.0.0.1:5000/` 
 
 
-###Error Handling
+### Error Handling
 
 Errors are returned as a JSON object in the format below:
 ```json
@@ -75,7 +76,7 @@ Errors are returned as a JSON object in the format below:
 }
 ```
 
-#### Endpoints
+#### Movies Endpoints
 
 ##### GET /movies
 
@@ -171,17 +172,27 @@ Errors are returned as a JSON object in the format below:
 ```json
   {
             "title": "Fast And Furious",
-            "release_date": "11-11-2020",
+            "release_date": "11-11-2020"
   }
 ```   
 
 * Sample Response:      
 
 ```json
-{"message": "successful"}
+{
+    "movie": [
+        {
+            "casts": [],
+            "id": 10,
+            "release_date": "Wed, 11 Nov 2020 00:00:00 GMT",
+            "title": "Fast And Furious"
+        }
+    ],
+    "success": true
+}
 ```    
 
-##### GET /categories
+##### GET /actors
 
 * Returns available `categories`
 

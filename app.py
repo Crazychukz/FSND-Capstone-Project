@@ -39,6 +39,7 @@ def create_app(test_config=None):
     @app.route('/movies', methods=['POST'])
     def add_movie():
         form_data = request.get_json()
+        print(form_data)
         error = False
         try:
             movie = Movie(title=form_data['title'], release_date=form_data['release_date'])
