@@ -1,4 +1,4 @@
-# :link:
+# :earth_africa:
 # FSND - Capstone API Backend  
 
 ## Getting Started
