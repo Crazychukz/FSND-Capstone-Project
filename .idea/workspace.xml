@@ -40,7 +40,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="14" />
-          <entry key="md" value="490" />
+          <entry key="md" value="644" />
           <entry key="py" value="1547" />
           <entry key="txt" value="1" />
         </counts>
@@ -48,7 +48,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="5" />
-          <entry key="Markdown" value="485" />
+          <entry key="Markdown" value="639" />
           <entry key="PLAIN_TEXT" value="15" />
           <entry key="Python" value="1547" />
         </counts>
@@ -106,8 +106,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="347">
-                <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+              <first_editor relative-caret-position="439">
+                <caret line="69" column="105" selection-start-line="69" selection-start-column="105" selection-end-line="69" selection-end-column="105" />
               </first_editor>
               <second_editor />
             </state>
@@ -319,8 +319,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="347">
-            <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+          <first_editor relative-caret-position="439">
+            <caret line="69" column="105" selection-start-line="69" selection-start-column="105" selection-end-line="69" selection-end-column="105" />
           </first_editor>
           <second_editor />
         </state>

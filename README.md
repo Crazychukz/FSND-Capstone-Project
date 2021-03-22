@@ -63,10 +63,11 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 Roles and permission tables are configured in Auth0. 
 The JWT includes the RBAC permission claims.
 
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  |  \| 
+Role                     | Permissions
+------------------------ | -------------------------
+Casting Assistant        | `get:actors` `get:movies`
+Casting Director         | `get:actors` `get:movies` `add:actor` `update:actor` `update:movie`
+Executive Producer       | `get:actors` `get:movies` `add:actor` `update:actor` `update:movie` `add:movie`
 
 
 
