@@ -54,6 +54,10 @@ Setting the `FLASK_ENV` variable to `development` will detect file changes and r
 Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` directory and the `__init__.py` file to find the application. 
 
 
+## RBAC controls  :unlock:
+
+
+
 
 ## API Reference
 
@@ -190,7 +194,42 @@ Errors are returned as a JSON object in the format below:
     ],
     "success": true
 }
-```    
+```  
+
+### PATCH /movies/{movie_id}
+
+* If `movie_id` exists, it updates the given record on the database
+
+
+* Request Arguments: 
+
+```json
+  {
+            "title": "Fast And Furious 2",
+  }
+``` 
+
+* Sample Response:      
+
+```json
+{
+    "movie": [
+        {
+            "casts": [
+                {
+                    "id": 1,
+                    "name": "Fast And Furious 2"
+                }
+            ],
+            "id": 1,
+            "release_date": "Wed, 11 Nov 2020 00:00:00 GMT",
+            "title": "Tom Guy"
+        }
+    ],
+    "success": true
+}
+```  
+  
 
 ### Actors Endpoints
 
@@ -249,14 +288,20 @@ Errors are returned as a JSON object in the format below:
 
 
 
-## Testing
+## Running Tests
 
 To run the tests
 ```
-    dropdb capstone_test
-    createdb capstone_test
-    psql capstone_test < trivia.psql
-    python test_app.py
+$ dropdb capstone_test
+```
+```
+$ createdb capstone_test
+```
+```
+$ psql capstone_test < trivia.psql
+ ```
+ ```
+$ python test_app.py
 ```
 
 
