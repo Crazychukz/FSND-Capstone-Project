@@ -63,12 +63,29 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 Roles and permission tables are configured in Auth0. 
 The JWT includes the RBAC permission claims.
 
+### Setup Auth0
+
+1. Create a new Auth0 Account
+2. Select a unique tenant domain
+3. Create a new, single page web application
+4. Create a new API
+    - in API Settings:
+        - Enable RBAC
+        - Enable Add Permissions in the Access Token
+5. Create new API permissions:
+    - `get:actors`
+    - `get:movies`
+    - `patch:actors`
+    - `patch:movies`
+    - `add:actors`
+    - `add:movies`
+6. Create new roles using the table below:
+ 
 Role                     | Permissions
 ------------------------ | -------------------------
 Casting Assistant        | `get:actors` `get:movies`
-Casting Director         | `get:actors` `get:movies` `add:actor` `update:actor` `update:movie`
-Executive Producer       | `get:actors` `get:movies` `add:actor` `update:actor` `update:movie` `add:movie`
-
+Casting Director         | `get:actors` `add:actors` `patch:actors` `patch:movies`
+Executive Producer       | `get:actors` `get:movies` `add:actors` `patch:actors` `patch:movies` `add:movies`
 
 
 ## :link:
@@ -218,7 +235,7 @@ Errors are returned as a JSON object in the format below:
 
 ```json
   {
-            "title": "Fast And Furious 2",
+            "title": "Fast And Furious 2"
   }
 ``` 
 
@@ -300,6 +317,53 @@ Errors are returned as a JSON object in the format below:
 ```   
 
 
+### Movie Casts Endpoints
+
+### POST /casts/{movie_id}
+
+* If `movie_id` exists, this adds the given `actors` to the `movie` cast
+
+* Request Arguments: 
+
+```json
+{
+    "casts": [1,2]
+}
+```   
+
+* Sample Response: 
+
+```json
+{
+    "casts": [
+        {
+            "id": 1,
+            "name": "Emeka Charles"
+        }
+    ],
+    "success": true
+}
+``` 
+
+### POST /casts/{movie_id}
+
+* If `movie_id` exists, returns a list of `casts` for the movie
+
+ 
+
+* Sample Response: 
+
+```json
+{
+    "casts": [
+        {
+            "id": 1,
+            "name": "Emeka Charles"
+        }
+    ],
+    "success": true
+}
+``` 
 
 ## Running Tests
 

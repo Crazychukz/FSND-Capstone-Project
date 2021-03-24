@@ -3,10 +3,11 @@ from flask import request, _request_ctx_stack
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+import ast
 
 AUTH0_DOMAIN = 'crazychukz.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'ccm-coffee'
+API_AUDIENCE = 'ccm-capstone'
 
 
 # AuthError Exception
@@ -52,16 +53,20 @@ def get_token_auth_header():
 
 
 def check_permissions(permission, payload):
+    print(payload['permissions'])
+    print(permission)
     if 'permissions' not in payload:
-        AuthError('', 400)
+        raise AuthError('', 400)
     if permission not in payload['permissions']:
-        AuthError('', 403)
-
-    return True
+        print('nada')
+        raise AuthError({
+            'code': 'invalid_permission',
+            'description': 'User has no permission.'}, 400)
 
 
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
+
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)
     rsa_key = {}
@@ -73,6 +78,7 @@ def verify_decode_jwt(token):
 
     for key in jwks['keys']:
         if key['kid'] == unverified_header['kid']:
+
             rsa_key = {
                 'kty': key['kty'],
                 'kid': key['kid'],
@@ -84,7 +90,7 @@ def verify_decode_jwt(token):
         try:
             payload = jwt.decode(
                 token,
-                rsa_key,
+                json.dumps(rsa_key),
                 algorithms=ALGORITHMS,
                 audience=API_AUDIENCE,
                 issuer='https://' + AUTH0_DOMAIN + '/'
@@ -118,8 +124,9 @@ def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
-            print(permission)
+
             token = get_token_auth_header()
+
             payload = verify_decode_jwt(token)
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)

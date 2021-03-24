@@ -6,6 +6,7 @@ from models import Movie, setup_db, Actor
 from flask_cors import CORS
 from auth.auth import AuthError, requires_auth
 from flask_migrate import Migrate
+from sqlalchemy import func
 
 
 def create_app(test_config=None):
@@ -17,15 +18,16 @@ def create_app(test_config=None):
     @app.after_request
     def after_request(response):
         response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Headers', "*")
         response.headers.add('Access-Control-Allow-Credentials', 'true')
+        response.headers.add('Access-Control-Allow-Origin', '*')
 
         return response
 
     @app.route('/movies', methods=['GET'])
-    # @requires_auth('get:drinks-detail')
-    def movies():
-        data = Movie.query.order_by('id').all()
+    @requires_auth('get:movies')
+    def movies(payload):
+        data = Movie.query.order_by(Movie.id.desc()).all()
         formatted_movies = [i.long() for i in data]
 
         return jsonify(
@@ -37,13 +39,14 @@ def create_app(test_config=None):
         )
 
     @app.route('/movies', methods=['POST'])
-    def add_movie():
+    @requires_auth('add:movies')
+    def add_movie(payload):
         form_data = request.get_json()
         print(form_data)
         error = False
         try:
             movie = Movie(title=form_data['title'], release_date=form_data['release_date'])
-            casts = form_data['casts']
+            casts = form_data.get('casts', None)
             if isinstance(casts, list):
                 for i in casts:
                     if Actor.query.get(i):
@@ -60,8 +63,8 @@ def create_app(test_config=None):
             }), 200
 
     @app.route('/movies/<int:movie_id>', methods=['DELETE'])
-    # @requires_auth('delete:drinks')
-    def delete_movie(movie_id):
+    @requires_auth('add:movies')
+    def delete_movie(payload, movie_id):
         movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
         if not movie:
             abort(404)
@@ -75,8 +78,8 @@ def create_app(test_config=None):
              "delete": movie_id}), 200
 
     @app.route('/movies/<int:movie_id>', methods=['PATCH'])
-    # @requires_auth('patch:drinks')
-    def update_movie(movie_id):
+    @requires_auth('patch:movies')
+    def update_movie(payload, movie_id):
         form_data = request.get_json()
         movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
 
@@ -100,10 +103,10 @@ def create_app(test_config=None):
              }), 200
 
     @app.route('/actors', methods=['GET'])
-    # @requires_auth('get:drinks-detail')
-    def actors():
+    @requires_auth('get:actors')
+    def actors(payloads):
         data = Actor.query.order_by('id').all()
-        formatted_data = [i.short() for i in data]
+        formatted_data = [i.long() for i in data]
 
         return jsonify(
             {
@@ -114,7 +117,8 @@ def create_app(test_config=None):
         )
 
     @app.route('/actors', methods=['POST'])
-    def add_actor():
+    @requires_auth('add:actors')
+    def add_actor(payload):
         form_data = request.get_json()
         error = False
         try:
@@ -131,8 +135,8 @@ def create_app(test_config=None):
             }), 200
 
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
-    # @requires_auth('delete:drinks')
-    def delete_actor(actor_id):
+    @requires_auth('add:actors')
+    def delete_actor(payload, actor_id):
         actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
         if not actor:
             abort(404)
@@ -146,8 +150,8 @@ def create_app(test_config=None):
              "delete": actor_id}), 200
 
     @app.route('/actors/<int:actor_id>', methods=['PATCH'])
-    # @requires_auth('patch:drinks')
-    def update_actor(actor_id):
+    @requires_auth('patch:actors')
+    def update_actor(payload, actor_id):
         form_data = request.get_json()
         actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
 
@@ -174,8 +178,8 @@ def create_app(test_config=None):
              }), 200
 
     @app.route('/casts/<int:movie_id>', methods=['POST'])
-    # @requires_auth('delete:drinks')
-    def add_casts(movie_id):
+    @requires_auth('patch:movies')
+    def add_casts(payload, movie_id):
         movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
         if not movie:
             abort(404)
@@ -196,8 +200,8 @@ def create_app(test_config=None):
              }), 200
 
     @app.route('/casts/<int:movie_id>', methods=['GET'])
-    # @requires_auth('delete:drinks')
-    def movie_casts(movie_id):
+    @requires_auth('patch:movies')
+    def movie_casts(payload, movie_id):
         movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
         if not movie:
             abort(404)
@@ -260,9 +264,9 @@ def create_app(test_config=None):
     def auth_error(error):
         return jsonify({
             "success": False,
-            "error": error.error,
-            "message": error.status_code
-        }), error.error
+            "error": error.error['code'],
+            "message": error.error['description']
+        }), error.status_code
 
     if __name__ == '__main__':
         APP.run(host='0.0.0.0', port=8080, debug=True)
