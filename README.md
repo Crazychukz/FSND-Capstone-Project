@@ -3,6 +3,11 @@
 
 ## Getting Started
 
+### Live URLs
+
+- Flask App https://ccm-capstone.herokuapp.com/
+- Frontend Application https://ccm-capstone-ui.herokuapp.com/
+
 ### Installing Dependencies
 
 #### Python 3.7
@@ -31,30 +36,6 @@ This will install all of the required packages we selected within the `requireme
 - [SQLAlchemy](https://www.sqlalchemy.org/) is the Python SQL toolkit and ORM we'll use handle the lightweight sqlite database. You'll primarily work in app.py and can reference models.py. 
 
 - [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#) is the extension we'll use to handle cross origin requests from our frontend server. 
-
-
-#  :file_folder:
-## Database Setup
-With Postgres running, restore a database using the `capstone.psql` file provided. From the backend folder in terminal run:
-```bash
-psql capstone < capstone.psql
-```
-
-## Running the server
-
-From within the `backend` directory first ensure you are working using your created virtual environment.
-
-To run the server, execute:
-
-```bash
-export FLASK_APP=flaskr
-export FLASK_ENV=development
-flask run
-```
-
-Setting the `FLASK_ENV` variable to `development` will detect file changes and restart the server automatically.
-
-Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` directory and the `__init__.py` file to find the application. 
 
 - - - -
 ## :unlock:
@@ -87,6 +68,42 @@ Casting Assistant        | `get:actors` `get:movies`
 Casting Director         | `get:actors` `add:actors` `patch:actors` `patch:movies`
 Executive Producer       | `get:actors` `get:movies` `add:actors` `patch:actors` `patch:movies` `add:movies`
 
+
+#  :file_folder:
+## Environment Variable Setup
+- Ensure that you've complete `Setup Auth0` above. 
+- Have Postgres running. Then create the apps `database` as follows:
+
+```bash
+su - postgres
+createdb database_name
+```
+
+- Export environmental variables
+
+```bash
+# Your auth0 domain
+export AUTH0_DOMAIN='yourdomain.auth0.com' 
+export ALGORITHMS='['RS256']'
+#the audience set for you auth0 app
+export API_AUDIENCE='your-audience'
+
+```
+## Running the server
+
+From within the root directory first ensure you are working using your created virtual environment.
+
+To run the server, execute:
+
+```bash
+export FLASK_APP=app.py
+export FLASK_ENV=development
+flask run
+```
+
+Setting the `FLASK_ENV` variable to `development` will detect file changes and restart the server automatically.
+
+Setting the `FLASK_APP` variable to `app.py` directs flask to use it as the application. 
 
 ## :link:
 ## API Reference
