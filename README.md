@@ -6,6 +6,7 @@
 ### Live URLs
 
 - Flask App https://ccm-capstone.herokuapp.com/
+
 - Frontend Application https://ccm-capstone-ui.herokuapp.com/
 
 ### Installing Dependencies
@@ -87,6 +88,8 @@ export AUTH0_DOMAIN='yourdomain.auth0.com'
 export ALGORITHMS='['RS256']'
 #the audience set for you auth0 app
 export API_AUDIENCE='your-audience'
+# DATABASE_URL
+export DATABASE_URL='postgres://postgres@localhost:5432/database_name'
 
 ```
 ## Running the server
@@ -98,6 +101,9 @@ To run the server, execute:
 ```bash
 export FLASK_APP=app.py
 export FLASK_ENV=development
+flask db stamp head
+flask db migrate
+flask db upgrade
 flask run
 ```
 
@@ -384,6 +390,10 @@ Errors are returned as a JSON object in the format below:
 
 ## Running Tests
 
+- Ensure that all environmental variable is set accordingly ( see `Environment Variable Setup` above )
+
+- Change the variable `access_token` in `test_app.py` 
+
 To run the tests
 ```
 $ dropdb capstone_test
@@ -391,9 +401,6 @@ $ dropdb capstone_test
 ```
 $ createdb capstone_test
 ```
-```
-$ psql capstone_test < trivia.psql
- ```
  ```
 $ python test_app.py
 ```
@@ -401,4 +408,4 @@ $ python test_app.py
 
 ## Appreciation
 
-* Udacity Instructors
+* All Udacity Instructors

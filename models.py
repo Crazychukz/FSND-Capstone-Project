@@ -1,7 +1,6 @@
 import os
 from sqlalchemy import Column, String, Integer, Table, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import json
 from flask_migrate import Migrate
@@ -12,8 +11,8 @@ db = SQLAlchemy()
 Base = declarative_base()
 
 
-def setup_db(app):
-    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+def setup_db(app, db_path=DATABASE_URL):
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
