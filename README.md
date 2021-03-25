@@ -1,6 +1,15 @@
 # :earth_africa:
 # FSND - Capstone API Backend  
 
+## About
+FSND Capstone API Backend is a RESTFUL Api backend built with [Flask](http://flask.pocoo.org/).
+
+It is Casting Agency application which models a company that is responsible for creating movies and managing 
+and assigning actors to those movies.
+
+The various endpoints on how to use the application are explained in the `API Reference` section of this README.
+
+
 ## Getting Started
 
 ### Live URLs
@@ -392,7 +401,10 @@ Errors are returned as a JSON object in the format below:
 
 - Ensure that all environmental variable is set accordingly ( see `Environment Variable Setup` above )
 
-- Change the variable `access_token` in `test_app.py` 
+- Change the variable `access_token` in `test_app.py` by running:
+```bash
+export ACCESS_TOKEN='your-access-token'
+```
 
 To run the tests
 ```

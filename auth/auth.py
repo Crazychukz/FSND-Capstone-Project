@@ -5,14 +5,11 @@ from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 
+AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
+ALGORITHMS = os.environ.get('ALGORITHMS')
+API_AUDIENCE = os.environ.get('API_AUDIENCE')
 
-# AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
-# ALGORITHMS = os.environ.get('ALGORITHMS')
-# API_AUDIENCE = os.environ.get('API_AUDIENCE')
 
-AUTH0_DOMAIN='crazychukz.auth0.com'
-ALGORITHMS=['RS256']
-API_AUDIENCE='ccm-capstone'
 # AuthError Exception
 
 
@@ -81,7 +78,6 @@ def verify_decode_jwt(token):
 
     for key in jwks['keys']:
         if key['kid'] == unverified_header['kid']:
-
             rsa_key = {
                 'kty': key['kty'],
                 'kid': key['kid'],
@@ -110,7 +106,8 @@ def verify_decode_jwt(token):
         except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
-                'description': 'Incorrect claims. Please, check the audience and issuer.'
+                'description': 'Incorrect claims. Please, check '
+                               'the audience and issuer.'
             }, 401)
         except Exception:
             raise AuthError({
@@ -127,7 +124,6 @@ def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
-
             token = get_token_auth_header()
 
             payload = verify_decode_jwt(token)

@@ -2,19 +2,10 @@ import os
 import unittest
 import json
 from flask_sqlalchemy import SQLAlchemy
-
 from app import create_app
 from models import setup_db
 
-access_token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlFVWkRSVE5DTWpZNU5UTXhOMFE1TWpFM01ETTVPVFExTmpjMFF6Z" \
-               "EVOVEU0TkVFelF6VXhOdyJ9.eyJpc3MiOiJodHRwczovL2NyYXp5Y2h1a3ouYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aD" \
-               "J8MTE0MDkyOTE4Nzg5OTcyMTc4MDA0IiwiYXVkIjpbImNjbS1jb2ZmZWUiLCJodHRwczovL2NyYXp5Y2h1a3ouYXV0aDAuY29tL3VzZ" \
-               "XJpbmZvIl0sImlhdCI6MTYxNDU0MzE1MCwiZXhwIjoxNjE0NTUwMzUwLCJhenAiOiJwSVdXSU9lc053RzFiZXliNVE5VkpxdVdjMHhN" \
-               "SE9BRyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6ZHJpbmtzIiwiZ2V0OmRyaW5" \
-               "rcy1kZXRhaWwiLCJwYXRjaDpkcmlua3MiLCJwb3N0OmRyaW5rcyJdfQ.GNcAqx9V2qAERZb9pQIYdwYX_9B-ekJh4QfEBoEPhZDh7" \
-               "0Q2EKHpMyG0NUetY_fuku1e5gsgYXz2N7URWC-LN0NCYpA_Muyz948qZc7FkURFUXhq5H2FEajEXWrTPSFXV5Fvj4AGZiUS6Ajdbwnw" \
-               "-J03amBc7eugnQnBIccNp-BZbPJMa4lnKOssuJtjQB6aRbyCnrKVvguYQnI_stH97XNVcC0-YGTdTAODFLGTzwNu38NH7xQQso_MyYv" \
-               "Lq-OOpgugAG4U3zUmc_m9b9I_fwhReVczk4J60LssUw7Dfz5qX625YzrnDc1echMHXPVtqJIkg9jWvW3U-uE-hhc7VA"
+access_token=os.environ.get('ACCESS_TOKEN')
 
 
 class MoviesActorTestCase(unittest.TestCase):
@@ -26,7 +17,6 @@ class MoviesActorTestCase(unittest.TestCase):
         self.database_name = "capstone_test"
         self.database_path = "postgres://{}/{}".format('localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
-
 
         # binds the app to the current context
         with self.app.app_context():

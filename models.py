@@ -33,7 +33,8 @@ class Movie(db.Model):
     title = Column(String(200), unique=True)
     release_date = Column(db.Date, nullable=False)
     genres = db.Column(db.String(500), nullable=True)
-    casts = db.relationship('Actor', secondary=casts, backref=db.backref('movie_casts', lazy='dynamic'))
+    casts = db.relationship('Actor', secondary=casts,
+                            backref=db.backref('movie_casts', lazy='dynamic'))
     '''
     short() short form representation of the Movie model
     '''
